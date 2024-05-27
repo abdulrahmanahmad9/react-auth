@@ -1,13 +1,19 @@
 import React, { useState } from "react";
 import { login } from "../api/auth";
 import { useMutation } from "react-query";
+import { useNavigate } from "react-router";
 
 const Login = () => {
   const [userInfo, setUserInfo] = useState({});
 
+  const navigate = useNavigate();
+
   const { mutate } = useMutation({
     mutationKey: ["login"],
     mutationFn: () => login(userInfo),
+    onSuccess: () => {
+      navigate("/Users");
+    },
   });
 
   const handleChange = (e) => {

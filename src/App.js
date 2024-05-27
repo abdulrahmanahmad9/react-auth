@@ -38,7 +38,6 @@ import Note from "./pages/Note";
 import Users from "./pages/Users";
 import { QueryClient, QueryClientProvider } from "react-query"; // Import QueryClient and QueryClientProvider
 import { useEffect, useState } from "react";
-import { checkToken } from "./api/auth";
 import UserContext from "./context/UserContext";
 import { getToken } from "./api/Storge.js";
 
