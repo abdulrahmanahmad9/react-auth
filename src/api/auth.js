@@ -1,8 +1,11 @@
 import instance from ".";
+// import jwt_decode from "jwt-decode";
+import { removeToken } from "./Storge";
 
 const storeToken = (token) => {
   localStorage.setItem("token", token);
 };
+
 const login = async (userInfo) => {
   try {
     const { data } = await instance.post("/auth/login", userInfo);
@@ -11,6 +14,10 @@ const login = async (userInfo) => {
   } catch (error) {
     console.log(error);
   }
+};
+
+const logout = () => {
+  removeToken();
 };
 
 const register = async (userInfo) => {
@@ -40,4 +47,18 @@ const getAllUsers = async () => {
   return data;
 };
 
-export { login, register, me, getAllUsers, storeToken };
+// const checkToken = () => {
+//   const token = localStorage.getItem("token");
+//   if (token) {
+//     const decode = jwt_decode(token);
+//     const cureentTime = Date.now() / 1000;
+//     if (decode.exp < cureentTime) {
+//       localStorage.removeItem("token");
+//       return false;
+//     }
+//     return true;
+//   }
+//   return false;
+// };
+
+export { login, register, me, getAllUsers, storeToken, logout };

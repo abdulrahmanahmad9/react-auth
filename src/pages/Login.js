@@ -8,9 +8,6 @@ const Login = () => {
   const { mutate } = useMutation({
     mutationKey: ["login"],
     mutationFn: () => login(userInfo),
-    onSuccess: () => {
-      alert("done");
-    },
   });
 
   const handleChange = (e) => {

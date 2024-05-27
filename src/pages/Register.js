@@ -8,9 +8,6 @@ const Register = () => {
   const { mutate } = useMutation({
     mutationKey: ["sign"],
     mutationFn: () => register(userInfo),
-    onSuccess: () => {
-      alert("registered");
-    },
   });
 
   const handleChange = (e) => {

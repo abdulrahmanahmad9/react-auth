@@ -37,27 +37,41 @@ import Notes from "./pages/Notes";
 import Note from "./pages/Note";
 import Users from "./pages/Users";
 import { QueryClient, QueryClientProvider } from "react-query"; // Import QueryClient and QueryClientProvider
+import { useEffect, useState } from "react";
+import { checkToken } from "./api/auth";
+import UserContext from "./context/UserContext";
+import { getToken } from "./api/Storge.js";
 
 const queryClient = new QueryClient();
 
 function App() {
+  const [user, setUser] = useState(false);
+
+  useEffect(() => {
+    if (getToken()) {
+      setUser(true);
+    }
+  }, []);
+
   return (
-    <QueryClientProvider client={queryClient}>
-      {" "}
-      {/* Wrap your app with QueryClientProvider */}
-      <div className="App font-mono">
-        <Navbar />
-        <Routes>
-          <Route path="/" element={<Home />} />{" "}
-          {/* Use element prop instead of Component */}
-          <Route path="/notes" element={<Notes />} />
-          <Route path="/notes/:noteId" element={<Note />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/users" element={<Users />} />
-        </Routes>
-      </div>
-    </QueryClientProvider>
+    <UserContext.Provider value={[user, setUser]}>
+      <QueryClientProvider client={queryClient}>
+        {" "}
+        {/* Wrap your app with QueryClientProvider */}
+        <div className="App font-mono">
+          <Navbar />
+          <Routes>
+            <Route path="/" element={<Home />} />{" "}
+            {/* Use element prop instead of Component */}
+            <Route path="/notes" element={<Notes />} />
+            <Route path="/notes/:noteId" element={<Note />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
+            <Route path="/users" element={<Users />} />
+          </Routes>
+        </div>
+      </QueryClientProvider>
+    </UserContext.Provider>
   );
 }
 
